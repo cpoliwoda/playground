@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +25,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -83,32 +89,63 @@ public class FXwindow04followPath extends Application {
                         System.out.println("path not empty");
 
 //                        Animation pathAnimation = new TranslateTransition();
-                        
-                        
+                        PathTransition pathTransition = new PathTransition();
+
+                        Path animationPath = new Path();
+
+//                        //animation from current position to all position in path
+//                        //starting always from curent position and NOT from last animation end position !!!
+//                        for (int i = 0; i < path.size(); i++) {
+//                             animationPath.getElements().add(new MoveTo(
+//                                     circle01.getCenterX(),
+//                                     circle01.getCenterY()));
+//                              animationPath.getElements().add(new LineTo(
+//                                    path.get(i).getX(), 
+//                                    path.get(i).getY() ));
+//                        }
+                        //animation from current position to over all position in path to last one in path
                         for (int i = 0; i < path.size(); i++) {
+                            if (i == 0) {
+                                animationPath.getElements().add(new MoveTo(
+                                        circle01.getCenterX(),
+                                        circle01.getCenterY()));
+                                animationPath.getElements().add(new LineTo(
+                                        path.get(i).getX(),
+                                        path.get(i).getY()));
+                            } else {
+                                animationPath.getElements().add(new MoveTo(
+                                        path.get(i-1).getX(),
+                                        path.get(i-1).getY()));
+                                animationPath.getElements().add(new LineTo(
+                                        path.get(i).getX(),
+                                        path.get(i).getY()));
+                            }
 
-                            TranslateTransition tt = new TranslateTransition(Duration.millis(2000), circle01);
-                            //need to remove the current position of circle to move to click position
-                            tt.setToX(path.get(i).getX() - circle01.getCenterX());
-                            tt.setToY(path.get(i).getY() - circle01.getCenterY());
-                            tt.setCycleCount(1);
-                            tt.setAutoReverse(false);
-
-                            tt.play();
-
-//                            //set the current point of the circle
-//                            circle01.setCenterX(path.get(i).getX());
-//                            circle01.setCenterY(path.get(i).getY());
-                            System.out.println("setting point " + i + " : " + path.get(i).getX() + " , " + path.get(i).getY());
-
-//                            try {
-//                                //wait before setting the next point
-//                                TimeUnit.SECONDS.wait(1);
-//                            } catch (InterruptedException ex) {
-//                                Logger.getLogger(FXwindow04followPath.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
                         }
 
+                        pathTransition.setDuration(Duration.millis(10000));
+                        pathTransition.setNode(circle01);
+                        pathTransition.setPath(animationPath);
+                        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+                        pathTransition.setCycleCount(1);
+                        pathTransition.setAutoReverse(false);
+
+                        pathTransition.play();
+
+//                        for (int i = 0; i < path.size(); i++) {
+//
+////                            //set the current point of the circle
+////                            circle01.setCenterX(path.get(i).getX());
+////                            circle01.setCenterY(path.get(i).getY());
+//                            System.out.println("setting point " + i + " : " + path.get(i).getX() + " , " + path.get(i).getY());
+//
+////                            try {
+////                                //wait before setting the next point
+////                                TimeUnit.SECONDS.wait(1);
+////                            } catch (InterruptedException ex) {
+////                                Logger.getLogger(FXwindow04followPath.class.getName()).log(Level.SEVERE, null, ex);
+////                            }
+//                        }
                     }
                 }
 

@@ -73,9 +73,9 @@ public class FXwindow02withMouseEvent extends Application {
 //            }
 //        }
 //        );
-        //        //set the position of the circle depending on the position of the mouse INSIDE the WINDOW/scene
-        //with an animation make it lok smother
-        scene.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
+        //        //set the position of the circle depending on the click position of the mouse INSIDE the WINDOW/scene
+        //with an animation make it look smother
+        scene.onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
