@@ -74,7 +74,7 @@ public class FXwindow04followPath extends Application {
 
             @Override
             public void handle(KeyEvent event) {
-
+                System.out.println("circle01 position: " + circle01.getCenterX() + " , " + circle01.getCenterY());
                 // clear the path
                 if (event.getCode().equals(KeyCode.SPACE)) {
                     path.clear();
@@ -104,6 +104,7 @@ public class FXwindow04followPath extends Application {
 //                                    path.get(i).getY() ));
 //                        }
                         //animation from current position to over all position in path to last one in path
+                        // BUT the POSITION of circle is NOT changed !! see souts
                         for (int i = 0; i < path.size(); i++) {
                             if (i == 0) {
                                 animationPath.getElements().add(new MoveTo(
@@ -114,8 +115,8 @@ public class FXwindow04followPath extends Application {
                                         path.get(i).getY()));
                             } else {
                                 animationPath.getElements().add(new MoveTo(
-                                        path.get(i-1).getX(),
-                                        path.get(i-1).getY()));
+                                        path.get(i - 1).getX(),
+                                        path.get(i - 1).getY()));
                                 animationPath.getElements().add(new LineTo(
                                         path.get(i).getX(),
                                         path.get(i).getY()));
@@ -132,20 +133,7 @@ public class FXwindow04followPath extends Application {
 
                         pathTransition.play();
 
-//                        for (int i = 0; i < path.size(); i++) {
-//
-////                            //set the current point of the circle
-////                            circle01.setCenterX(path.get(i).getX());
-////                            circle01.setCenterY(path.get(i).getY());
-//                            System.out.println("setting point " + i + " : " + path.get(i).getX() + " , " + path.get(i).getY());
-//
-////                            try {
-////                                //wait before setting the next point
-////                                TimeUnit.SECONDS.wait(1);
-////                            } catch (InterruptedException ex) {
-////                                Logger.getLogger(FXwindow04followPath.class.getName()).log(Level.SEVERE, null, ex);
-////                            }
-//                        }
+                        System.out.println("circle01 position: " + circle01.getCenterX() + " , " + circle01.getCenterY());
                     }
                 }
 
