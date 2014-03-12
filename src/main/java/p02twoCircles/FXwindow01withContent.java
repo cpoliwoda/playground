@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package twoCircles;
+package p02twoCircles;
 
-import oneCircle.*;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;

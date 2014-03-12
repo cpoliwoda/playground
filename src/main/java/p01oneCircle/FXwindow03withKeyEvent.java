@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oneCircle;
+package p01oneCircle;
 
 import javafx.application.Application;
 import javafx.scene.Group;

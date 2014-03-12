@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oneCircle;
+package p01oneCircle;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +15,7 @@ import javafx.animation.PathTransition.OrientationType;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
@@ -74,7 +75,10 @@ public class FXwindow04followPath extends Application {
 
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("circle01 position: " + circle01.getCenterX() + " , " + circle01.getCenterY());
+//                System.out.println("circle01 position start: " + circle01.getCenterX() + " , " + circle01.getCenterY());
+//                System.out.println("circle01 position start: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
+                System.out.println("circle01 position start: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
+
                 // clear the path
                 if (event.getCode().equals(KeyCode.SPACE)) {
                     path.clear();
@@ -104,12 +108,14 @@ public class FXwindow04followPath extends Application {
 //                                    path.get(i).getY() ));
 //                        }
                         //animation from current position to over all position in path to last one in path
-                        // BUT the POSITION of circle is NOT changed !! see souts
+                        //  the POSITION of circle is  changed !! updated in the drawing thread NOT in this one !!!
                         for (int i = 0; i < path.size(); i++) {
                             if (i == 0) {
                                 animationPath.getElements().add(new MoveTo(
                                         circle01.getCenterX(),
                                         circle01.getCenterY()));
+//                                         circle01.getLayoutX(),
+//                                        circle01.getLayoutY()));
                                 animationPath.getElements().add(new LineTo(
                                         path.get(i).getX(),
                                         path.get(i).getY()));
@@ -133,7 +139,17 @@ public class FXwindow04followPath extends Application {
 
                         pathTransition.play();
 
-                        System.out.println("circle01 position: " + circle01.getCenterX() + " , " + circle01.getCenterY());
+                        pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                System.out.println("pathTransition.setOnFinished(new EventHandler<ActionEvent>() {");
+//                        System.out.println("circle01 position end: " + circle01.getCenterX() + " , " + circle01.getCenterY());
+//                        System.out.println("circle01 position end: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
+                                System.out.println("circle01 position end: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
+                            }
+                        });
+
                     }
                 }
 
