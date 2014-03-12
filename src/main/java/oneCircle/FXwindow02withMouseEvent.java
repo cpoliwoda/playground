@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pack01;
+package oneCircle;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
@@ -19,12 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class FXwindow04followPath extends Application {
+public class FXwindow02withMouseEvent extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -61,17 +63,35 @@ public class FXwindow04followPath extends Application {
 //        }
 //        );
 //
+//        //        //set the position of the circle depending on the position of the mouse INSIDE the WINDOW/scene
+//        scene.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//                circle01.centerXProperty().set(event.getSceneX());
+//                circle01.centerYProperty().set(event.getSceneY());
+//            }
+//        }
+//        );
         //        //set the position of the circle depending on the position of the mouse INSIDE the WINDOW/scene
+        //with an animation make it lok smother
         scene.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                circle01.centerXProperty().set(event.getSceneX());
-                circle01.centerYProperty().set(event.getSceneY());
+
+                TranslateTransition tt = new TranslateTransition(Duration.millis(2000), circle01);
+                //need to remove the current position of circle to move to click position
+                tt.setToX(event.getSceneX() - circle01.getCenterX());
+                tt.setToY(event.getSceneY() - circle01.getCenterY());
+                tt.setCycleCount(1);
+                tt.setAutoReverse(false);
+
+                tt.play();
             }
         }
         );
-        
+
         //show window
         stage.show();
     }

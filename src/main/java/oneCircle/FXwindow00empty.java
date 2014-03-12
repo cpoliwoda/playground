@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pack01;
+package oneCircle;
 
 import javafx.application.Application;
 import javafx.scene.Group;

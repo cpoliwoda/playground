@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 
-package pack01.keyhandler;
+package oneCircle.keyhandler;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Shape;
+import static oneCircle.keyhandler.ArrowKeysEventHandler.shapeProperty;
 
 /**
  *
@@ -17,20 +20,27 @@ import javafx.scene.shape.Shape;
  */
 public class UpKeyEventHandler implements EventHandler<KeyEvent> {
 
-    Shape shape = null;
+//    Shape shape = null;
+    public static ObjectProperty<Shape> shapeProperty = new SimpleObjectProperty<Shape>();
+     
     double stepSize = 10;
 
     public UpKeyEventHandler(Shape shape, double stepSize) {
-        this.shape = shape;
+//        this.shape = shape;
+        shapeProperty.set(shape);
         this.stepSize = stepSize;
     }
 
     @Override
     public void handle(KeyEvent event) {
         if (event.getCode().equals(KeyCode.UP)) {
-            shape.setLayoutY(shape.getLayoutY() - stepSize);
-//            shape.centerYProperty().set(shape.getCenterY() - stepSize);
-
+//            shape.setLayoutY(shape.getLayoutY() - stepSize);
+////            shape.centerYProperty().set(shape.getCenterY() - stepSize);
+            shapeProperty.get().setLayoutY(shapeProperty.get().getLayoutY() - stepSize);
         }
+    }
+    
+    public void setShape(Shape shape){
+        shapeProperty.set(shape);
     }
 }

@@ -4,8 +4,17 @@
  * and open the template in the editor.
  */
 
-package pack01.keyhandler;
+package oneCircle.keyhandler;
 
+import com.sun.javafx.binding.BidirectionalBinding;
+import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableObjectValue;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Shape;
@@ -16,7 +25,11 @@ import javafx.scene.shape.Shape;
  */
 public class ArrowKeysEventHandler implements EventHandler<KeyEvent> {
 
-    Shape shape = null;
+        
+//    Shape shape = null;
+    public static ObjectProperty<Shape> shapeProperty = new SimpleObjectProperty<Shape>();
+     
+    
     double stepSize = 10;
     UpKeyEventHandler up = null;
     DownKeyEventHandler down = null;
@@ -24,7 +37,8 @@ public class ArrowKeysEventHandler implements EventHandler<KeyEvent> {
     RightKeyEventHandler right = null;
 
     public ArrowKeysEventHandler(Shape shape, double stepSize) {
-        this.shape = shape;
+//        this.shape = shape;
+        shapeProperty.set(shape);
         this.stepSize = stepSize;
         up = new UpKeyEventHandler(shape, stepSize);
         down = new DownKeyEventHandler(shape, stepSize);
@@ -38,5 +52,13 @@ public class ArrowKeysEventHandler implements EventHandler<KeyEvent> {
         down.handle(event);
         left.handle(event);
         right.handle(event);
+    }
+    
+    public void setShape(Shape shape){
+        shapeProperty.set(shape);
+        up.setShape(shape);
+        down.setShape(shape);
+        left.setShape(shape);
+        right.setShape(shape);
     }
 }

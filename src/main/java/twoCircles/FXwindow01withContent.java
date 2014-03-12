@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package pack01;
+package twoCircles;
 
+import oneCircle.*;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -34,6 +35,14 @@ public class FXwindow01withContent extends Application{
         
         //add element to root element of scene
         root.getChildren().add(circle01);
+        
+        Circle circle02 = new Circle(30, Color.BLUEVIOLET);
+        //set position of the centrum
+        circle02.centerXProperty().set(200);
+        circle02.centerYProperty().set(280);
+        
+        //add element to root element of scene
+        root.getChildren().add(circle02);
         
         
         

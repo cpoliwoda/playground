@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pack01;
+package oneCircle;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import pack01.keyhandler.ArrowKeysEventHandler;
+import oneCircle.keyhandler.ArrowKeysEventHandler;
 
 /**
  *
