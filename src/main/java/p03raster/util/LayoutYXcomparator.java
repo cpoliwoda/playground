@@ -12,7 +12,7 @@ import javafx.scene.shape.Shape;
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class LayoutXYZcomparator implements Comparator<Shape> {
+public class LayoutYXcomparator implements Comparator<Shape> {
 
     @Override
     public int compare(Shape o1, Shape o2) {
@@ -32,19 +32,19 @@ public class LayoutXYZcomparator implements Comparator<Shape> {
 
         } else {
 
-            // check first X than Y
-            if (o1.getLayoutX() > o2.getLayoutX()) {
+            // check first Y than X
+            if (o1.getLayoutY() > o2.getLayoutY()) {
                 return 1;
-            } else if (o1.getLayoutX() == o2.getLayoutX()) {
+            } else if (o1.getLayoutY() == o2.getLayoutY()) {
 
-                if (o1.getLayoutY() > o2.getLayoutY()) {
+                if (o1.getLayoutX() > o2.getLayoutX()) {
                     return 1;
-                } else if (o1.getLayoutY() == o2.getLayoutY()) {
+                } else if (o1.getLayoutX() == o2.getLayoutX()) {
                     return 0;
-                } else if (o1.getLayoutY() < o2.getLayoutY()) {
+                } else if (o1.getLayoutX() < o2.getLayoutX()) {
                     return -1;
                 }
-            } else if (o1.getLayoutX() < o2.getLayoutX()) {
+            } else if (o1.getLayoutY() < o2.getLayoutY()) {
                 return -1;
             }
         }// null

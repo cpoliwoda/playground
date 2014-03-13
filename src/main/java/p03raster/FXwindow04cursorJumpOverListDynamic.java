@@ -18,7 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import p03raster.util.LayoutXYZcomparator;
+import p03raster.util.LayoutXYcomparator;
+import p03raster.util.LayoutYXcomparator;
 
 /**
  *
@@ -78,7 +79,7 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         allCircles.addAll(circlesInSecColumn);
         allCircles.addAll(circlesInThirdColumn);
         //sort the circles 
-        allCircles.sort(new LayoutXYZcomparator());
+        allCircles.sort(new LayoutXYcomparator());
 
         //add elements to root element of scene
         root.getChildren().addAll(allCircles);
@@ -101,7 +102,7 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
 
     public KeyMoveOverListEventHandler04(Group root, ArrayList<Shape> allCircles) {
         allShapes.addAll(allCircles);
-//        allShapes.sort(new LayoutXYZcomparator());
+//        allShapes.sort(new LayoutXYcomparator());
 
         Shape firstShape = allShapes.get(0);
         root.getChildren().add(cursor);
@@ -150,6 +151,12 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
             }
         }
         System.out.println(" columnIndex = " + columnIndex);
+        
+        //sort all columns from top to botton meaning via Y
+        LayoutYXcomparator comparator = new LayoutYXcomparator();
+        for (ArrayList<Shape> column : allColumns) {
+            column.sort(comparator);
+        }
     }
 
     @Override
