@@ -6,8 +6,10 @@
 package p01oneCircle;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -110,6 +112,15 @@ public class FXwindow03withKeyEvent extends Application {
 //        scene.addEventFilter(new EventType<KeyEvent>(),new ArrowKeysEventHandler(circle01, 10));
 //        circle01.addEventHandler(new EventType<KeyEvent>(),new ArrowKeysEventHandler(circle01, 10));
         
+        //adding more than one handler on key pressed
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                
+                System.out.println("Key "+ event.getText()+ " is pressed.  char = " + event.getCharacter());
+            }
+        });
         
         //show window
         stage.show();
