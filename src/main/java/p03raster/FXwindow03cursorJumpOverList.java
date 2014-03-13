@@ -32,7 +32,7 @@ public class FXwindow03cursorJumpOverList extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();
-        Scene scene = new Scene(root, 800, 600, Color.BLACK);
+        Scene scene = new Scene(root, 600, 400, Color.BLACK);
         stage.setScene(scene);
 
         int idCounter = 1;
@@ -117,6 +117,8 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
         allColumns.add(new ArrayList<>());
         int columnIndex = 0;
         Shape firstShapeInAcolumn = this.allShapes.get(0);
+        allColumns.get(0).add(firstShapeInAcolumn);//add the first shape in the first column manually
+                
 
         //check now all other shapes if they are in range 
         //if yes add to latest column
@@ -146,8 +148,7 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
                 || (event.getCode().equals(KeyCode.RIGHT))
                 || (event.getCode().equals(KeyCode.LEFT))) {
 
-            System.out.println(" a arrow key was pressed ");
-
+//            System.out.println(" a arrow key was pressed ");
             Shape shapeMarkedByCursor = null;
 
             //find the shape under the cursor
@@ -172,10 +173,12 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
                 Shape nextShape = null;
 
                 if (event.getCode().equals(KeyCode.UP)) {
+                    System.out.println(" UP key was pressed ");
                     if (indexOfShape > 0) {
                         nextShape = allShapes.get(indexOfShape - 1);
                     }
                 } else {//DOWN
+                    System.out.println(" DOWN key was pressed ");
                     if (indexOfShape < allShapes.size() - 1) {
                         nextShape = allShapes.get(indexOfShape + 1);
                     }
@@ -188,7 +191,18 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
 
             } else { // LEFT or RIGHT
 
+                System.out.println(" LEFT or RIGHT key was pressed ");
+                System.out.println(" shapeMarkedByCursor = " + shapeMarkedByCursor);
+
                 int columnIndexOfCursor = -1;//invalid value as default
+
+                System.out.println("allColumns.get(0).size() = "+allColumns.get(0).size());
+                System.out.println("allColumns.get(0).get(0) = "+ allColumns.get(0).get(0));
+                
+                for (int i = 0; i < allColumns.get(0).size(); i++) {
+                    System.out.println("allColumns.get(0).get(" + i + ") = " + allColumns.get(0).get(i));
+
+                }
 
                 //check in which column the cursor is
                 for (int i = 0; i < allColumns.size(); i++) {
@@ -196,6 +210,7 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
 
                     if (columnContainsCursor) {
                         columnIndexOfCursor = i;
+                        System.out.println("columnIndexOfCursor = " + columnIndexOfCursor);
                         break;
                     }
                 }
@@ -203,19 +218,21 @@ class KeyMoveOverListEventHandler03 implements EventHandler<KeyEvent> {
                 Shape firstShapeInNextColumn = null;
 
                 if (event.getCode().equals(KeyCode.LEFT)) {
+                    System.out.println(" LEFT  key was pressed ");
+                    
                     if (columnIndexOfCursor > 0) {
                         firstShapeInNextColumn = allColumns.get(columnIndexOfCursor - 1).get(0);
                     }
 
                 } else // RIGHT
                 {
+                    System.out.println(" RIGHT key was pressed ");
                     if ((columnIndexOfCursor > - 1)//we really found a shape
                             && (columnIndexOfCursor < allColumns.size() - 1)) {
 
                         firstShapeInNextColumn = allColumns.get(columnIndexOfCursor + 1).get(0);
                     }
                 }
-
                 if (firstShapeInNextColumn != null) {
                     cursor.setLayoutX(firstShapeInNextColumn.getLayoutX());
                     cursor.setLayoutY(firstShapeInNextColumn.getLayoutY());
