@@ -29,8 +29,8 @@ public class FXwindow03withKeyEvent extends Application {
 
         Circle circle01 = new Circle(50, Color.BEIGE);
         //set position of the centrum
-        circle01.centerXProperty().set(100);
-        circle01.centerYProperty().set(180);
+        circle01.setLayoutX(100);
+        circle01.setLayoutY(180);
 
         //add element to root element of scene
         root.getChildren().add(circle01);
@@ -78,16 +78,16 @@ public class FXwindow03withKeyEvent extends Application {
 //                double stepSize = 10;
 //
 //                if (event.getCode().equals(event.getCode().UP)) {
-//                    circle01.centerYProperty().set(circle01.getCenterY() - stepSize);
+//                    circle01.setLayoutY(circle01.getLayoutY() - stepSize);
 //
 //                } else if (event.getCode().equals(event.getCode().DOWN)) {
-//                    circle01.centerYProperty().set(circle01.getCenterY() + stepSize);
+//                    circle01.setLayoutY(circle01.getLayoutY() + stepSize);
 //
 //                } else if (event.getCode().equals(event.getCode().LEFT)) {
-//                    circle01.centerXProperty().set(circle01.getCenterX() - stepSize);
+//                    circle01.setLayoutX(circle01.getLayoutX() - stepSize);
 //
 //                } else if (event.getCode().equals(event.getCode().RIGHT)) {
-//                    circle01.centerXProperty().set(circle01.getCenterX() + stepSize);
+//                    circle01.setLayoutX(circle01.getLayoutrX() + stepSize);
 //                }
 //
 //            }

@@ -50,8 +50,8 @@ public class FXwindow04followPath extends Application {
 
         Circle circle01 = new Circle(50, Color.BEIGE);
         //set position of the centrum
-        circle01.centerXProperty().set(100);
-        circle01.centerYProperty().set(180);
+        circle01.setLayoutX(100);
+        circle01.setLayoutY(180);
 
         //add element to root element of scene
         root.getChildren().add(circle01);
@@ -76,8 +76,8 @@ public class FXwindow04followPath extends Application {
             @Override
             public void handle(KeyEvent event) {
 //                System.out.println("circle01 position start: " + circle01.getCenterX() + " , " + circle01.getCenterY());
-//                System.out.println("circle01 position start: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
-                System.out.println("circle01 position start: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
+                System.out.println("circle01 position start: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
+//                System.out.println("circle01 position start: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
 
                 // clear the path
                 if (event.getCode().equals(KeyCode.SPACE)) {
@@ -112,10 +112,11 @@ public class FXwindow04followPath extends Application {
                         for (int i = 0; i < path.size(); i++) {
                             if (i == 0) {
                                 animationPath.getElements().add(new MoveTo(
-                                        circle01.getCenterX(),
-                                        circle01.getCenterY()));
-//                                         circle01.getLayoutX(),
-//                                        circle01.getLayoutY()));
+                                        //                                        circle01.getCenterX(),
+                                        //                                        circle01.getCenterY()));
+                                        //                                         circle01.getLayoutX(),
+                                        //                                        circle01.getLayoutY()));
+                                        0, 0));
                                 animationPath.getElements().add(new LineTo(
                                         path.get(i).getX(),
                                         path.get(i).getY()));
@@ -144,9 +145,9 @@ public class FXwindow04followPath extends Application {
                             @Override
                             public void handle(ActionEvent event) {
                                 System.out.println("pathTransition.setOnFinished(new EventHandler<ActionEvent>() {");
-//                        System.out.println("circle01 position end: " + circle01.getCenterX() + " , " + circle01.getCenterY());
-//                        System.out.println("circle01 position end: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
-                                System.out.println("circle01 position end: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
+                                System.out.println("circle01 position center end: " + circle01.getCenterX() + " , " + circle01.getCenterY());
+                                System.out.println("circle01 position layout end: " + circle01.getLayoutX() + " , " + circle01.getLayoutY());
+                                System.out.println("circle01 position translation end: " + circle01.getTranslateX() + " , " + circle01.getTranslateY());
                             }
                         });
 

@@ -26,25 +26,39 @@ public class FXwindow01withContent extends Application {
         stage.setScene(scene);
 
         Circle circle01 = new Circle(50, Color.BEIGE);
-//        if no position is set via center.. OR translate.. the shape is 
+        
+        /* Attention:        Shape are positionized 
+         - first via Layout..
+         - second via Translation..
+         - or via special method like in case of circle center...
+        NOTICE: use Layout.. to positionize your shapes !!!!
+        */
+        
+//        if no position is set via layout.. (center..) OR translate.. the shape is 
 //        positionized into 0,0 the left upper corner
 //        if center.. AND translate.. is set the final position is the sum of this values
         
-        //set position of the centrum
-        circle01.centerXProperty().set(100);
-        circle01.centerYProperty().set(180);
-
-        //set translation of the circle
-        circle01.setTranslateX(100);
-        circle01.setTranslateY(180);
+        //set position of the shape via layout
+        circle01.setLayoutX(100);
+        circle01.setLayoutY(180);
         
-        Circle circle02 = new Circle(30, Color.ROYALBLUE);
-        circle02.centerXProperty().set(200);
-        circle02.centerYProperty().set(360);
+
+//        //set translation of the circle
+//        circle01.setTranslateX(100);
+//        circle01.setTranslateY(180);
+        
+//        //set position of the centrum
+//        circle01.centerXProperty().set(100);
+//        circle01.centerYProperty().set(180);
+//
+        
+//        Circle circle02 = new Circle(30, Color.ROYALBLUE);
+//        circle02.centerXProperty().set(200);
+//        circle02.centerYProperty().set(360);
         
         //add element to root element of scene
         root.getChildren().add(circle01);
-        root.getChildren().add(circle02);
+//        root.getChildren().add(circle02);
 
         //show window
         stage.show();

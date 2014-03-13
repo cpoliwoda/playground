@@ -7,18 +7,13 @@ package p01oneCircle;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -36,8 +31,8 @@ public class FXwindow02withMouseEvent extends Application {
 
         Circle circle01 = new Circle(50, Color.BEIGE);
         //set position of the centrum
-        circle01.centerXProperty().set(100);
-        circle01.centerYProperty().set(180);
+        circle01.setLayoutX(100);
+        circle01.setLayoutY(180);
 
         //add element to root element of scene
         root.getChildren().add(circle01);
@@ -47,8 +42,8 @@ public class FXwindow02withMouseEvent extends Application {
 //
 //            @Override
 //            public void handle(MouseEvent event) {
-//                circle01.centerXProperty().set(event.getSceneX());
-//                circle01.centerYProperty().set(event.getSceneY());
+//                circle01.setLayoutX(event.getSceneX());
+//                circle01.setLayoutY(event.getSceneY());
 //            }
 //        }
 //        );
@@ -57,8 +52,8 @@ public class FXwindow02withMouseEvent extends Application {
 //
 //            @Override
 //            public void handle(MouseEvent event) {
-//                circle01.centerXProperty().set(event.getSceneX());
-//                circle01.centerYProperty().set(event.getSceneY());
+//                circle01.setLayoutX(event.getSceneX());
+//                circle01.setLayoutY(event.getSceneY());
 //            }
 //        }
 //        );
@@ -68,8 +63,8 @@ public class FXwindow02withMouseEvent extends Application {
 //
 //            @Override
 //            public void handle(MouseEvent event) {
-//                circle01.centerXProperty().set(event.getSceneX());
-//                circle01.centerYProperty().set(event.getSceneY());
+//                circle01.setLayoutX(event.getSceneX());
+//                circle01.setLayoutY(event.getSceneY());
 //            }
 //        }
 //        );
@@ -82,8 +77,8 @@ public class FXwindow02withMouseEvent extends Application {
 
                 TranslateTransition tt = new TranslateTransition(Duration.millis(2000), circle01);
                 //need to remove the current position of circle to move to click position
-                tt.setToX(event.getSceneX() - circle01.getCenterX());
-                tt.setToY(event.getSceneY() - circle01.getCenterY());
+                tt.setToX(event.getSceneX() - circle01.getLayoutX());
+                tt.setToY(event.getSceneY() - circle01.getLayoutY());
                 tt.setCycleCount(1);
                 tt.setAutoReverse(false);
 
@@ -92,8 +87,34 @@ public class FXwindow02withMouseEvent extends Application {
         }
         );
 
+        scene.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseInfoEventHandler());
+//        circle01.addEventHandler(MouseEvent.MOUSE_ENTERED, new MouseInfoEventHandler());
+
         //show window
         stage.show();
+    }
+
+}
+
+class MouseInfoEventHandler implements EventHandler<MouseEvent> {
+
+    @Override
+    public void handle(MouseEvent event) {
+         System.out.println(" event scene x,y = " + event.getSceneX()+ " , " + event.getSceneY());
+
+        if (event.equals(MouseEvent.MOUSE_CLICKED)) {
+//        f (event.equals(MouseEvent.MOUSE_ENTERED)) {
+
+            Node node = event.getPickResult().getIntersectedNode();
+            System.out.println(" node = " + node);
+
+            boolean nodeContainsPoint = node.contains(event.getSceneX(), event.getSceneY());
+
+            if (nodeContainsPoint) {
+                System.out.println(" nodeContainsPoint = " + event.getSceneX()+ " , " + event.getSceneY());
+            }
+        }//clicked
+
     }
 
 }
