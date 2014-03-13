@@ -111,27 +111,22 @@ public class FXwindow04followPath extends Application {
                         //  the POSITION of circle is  changed !! updated in the drawing thread NOT in this one !!!
                         for (int i = 0; i < path.size(); i++) {
                             if (i == 0) {
-                                animationPath.getElements().add(new MoveTo(
-                                        //                                        circle01.getCenterX(),
-                                        //                                        circle01.getCenterY()));
-                                        //                                         circle01.getLayoutX(),
-                                        //                                        circle01.getLayoutY()));
-                                        0, 0));
-                                animationPath.getElements().add(new LineTo(
-                                        path.get(i).getX(),
-                                        path.get(i).getY()));
+                                animationPath.getElements().add(new MoveTo(0, 0));
+                                Point2D sceneToLocal = circle01.sceneToLocal(new Point2D(path.get(i).getX(), path.get(i).getY()));
+                                 animationPath.getElements().add(new LineTo(sceneToLocal.getX(), sceneToLocal.getY()));
+                                
                             } else {
-                                animationPath.getElements().add(new MoveTo(
-                                        path.get(i - 1).getX(),
-                                        path.get(i - 1).getY()));
-                                animationPath.getElements().add(new LineTo(
-                                        path.get(i).getX(),
-                                        path.get(i).getY()));
+                                Point2D sceneToLocalPrevious = circle01.sceneToLocal(new Point2D(path.get(i-1).getX(), path.get(i-1).getY()));
+                                 animationPath.getElements().add(new MoveTo(sceneToLocalPrevious.getX(), sceneToLocalPrevious.getY()));
+                                
+                                 Point2D sceneToLocal = circle01.sceneToLocal(new Point2D(path.get(i).getX(), path.get(i).getY()));
+                                 animationPath.getElements().add(new LineTo(sceneToLocal.getX(), sceneToLocal.getY()));
+                                
                             }
 
                         }
 
-                        pathTransition.setDuration(Duration.millis(10000));
+                        pathTransition.setDuration(Duration.millis(3000));
                         pathTransition.setNode(circle01);
                         pathTransition.setPath(animationPath);
                         pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);

@@ -87,16 +87,16 @@ public class FXwindow03withKeyEvent extends Application {
 //                    circle01.setLayoutX(circle01.getLayoutX() - stepSize);
 //
 //                } else if (event.getCode().equals(event.getCode().RIGHT)) {
-//                    circle01.setLayoutX(circle01.getLayoutrX() + stepSize);
+//                    circle01.setLayoutX(circle01.getLayoutX() + stepSize);
 //                }
 //
 //            }
 //        }
 //        );
 //        
-        //TRANSLATE the position of the circle depending start position and
+//        //TRANSLATE the position of the circle depending start position and
 //        //on the arrow key is pressed (moving free in scene)
-        // DONT work only last added EventHandler is reacting/responsing
+//        // DONT work only last added EventHandler is reacting/responsing
 //        scene.onKeyPressedProperty().set(new LeftKeyEventHandler(circle01, 10));
 //        scene.onKeyPressedProperty().set(new RightKeyEventHandler(circle01, 10));
 //        scene.onKeyPressedProperty().set(new UpKeyEventHandler(circle01, 10));

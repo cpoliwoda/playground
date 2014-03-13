@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import p01oneCircle.util.Util;
 
 /**
  *
@@ -47,7 +48,8 @@ public class FXwindow02withMouseEvent extends Application {
 //            }
 //        }
 //        );
-////        //set the position of the circle depending on clicking position INSIDE the WINDOW/scene
+//        
+////        //set the position of the circle depending on CLICKING position INSIDE the WINDOW/scene
 //        scene.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
 //
 //            @Override
@@ -57,8 +59,8 @@ public class FXwindow02withMouseEvent extends Application {
 //            }
 //        }
 //        );
-//
-//        //        //set the position of the circle depending on the position of the mouse INSIDE the WINDOW/scene
+// 
+////        //set the position of the circle depending on the MOVING position of the mouse INSIDE the WINDOW/scene
 //        scene.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
 //
 //            @Override
@@ -68,50 +70,56 @@ public class FXwindow02withMouseEvent extends Application {
 //            }
 //        }
 //        );
-        //        //set the position of the circle depending on the click position of the mouse INSIDE the WINDOW/scene
-        //with an animation make it look smother
-        scene.onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+//        //set the position of the circle depending on the click position of the mouse INSIDE the WINDOW/scene
+//        //with an animation make it look smother
+//        scene.onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                TranslateTransition tt = new TranslateTransition(Duration.millis(2000), circle01);
+//                //need to remove the current position of circle to move to click position
+//                tt.setToX(event.getSceneX() - circle01.getLayoutX());
+//                tt.setToY(event.getSceneY() - circle01.getLayoutY());
+//                tt.setCycleCount(1);
+//                tt.setAutoReverse(false);
+//
+//                tt.play();
+//            }
+//        }
+//        );
 
-            @Override
-            public void handle(MouseEvent event) {
-
-                TranslateTransition tt = new TranslateTransition(Duration.millis(2000), circle01);
-                //need to remove the current position of circle to move to click position
-                tt.setToX(event.getSceneX() - circle01.getLayoutX());
-                tt.setToY(event.getSceneY() - circle01.getLayoutY());
-                tt.setCycleCount(1);
-                tt.setAutoReverse(false);
-
-                tt.play();
-            }
-        }
-        );
-
-        scene.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseInfoEventHandler());
-//        circle01.addEventHandler(MouseEvent.MOUSE_ENTERED, new MouseInfoEventHandler());
+//        // ABOVE WORKS 
+//        circle01.pickOnBoundsProperty().set(true);
+//        
+        scene.addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePickInfoEventHandler());
 
         //show window
         stage.show();
+
+//        Util.printPositionBoundingStuff(circle01);
     }
 
 }
 
-class MouseInfoEventHandler implements EventHandler<MouseEvent> {
+class MousePickInfoEventHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-         System.out.println(" event scene x,y = " + event.getSceneX()+ " , " + event.getSceneY());
+        System.out.println(" event scene x,y = " + event.getSceneX() + " , " + event.getSceneY());
 
-        if (event.equals(MouseEvent.MOUSE_CLICKED)) {
+        if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 //        f (event.equals(MouseEvent.MOUSE_ENTERED)) {
 
             Node node = event.getPickResult().getIntersectedNode();
             System.out.println(" node = " + node);
 
-            boolean nodeContainsPoint = node.contains(event.getSceneX(), event.getSceneY());
+            if (node != null) {
+                boolean nodeContainsPoint = node.contains(event.getSceneX(), event.getSceneY());
 
-            if (nodeContainsPoint) {
-                System.out.println(" nodeContainsPoint = " + event.getSceneX()+ " , " + event.getSceneY());
+                if (nodeContainsPoint) {
+                    System.out.println(" nodeContainsPoint = " + event.getSceneX() + " , " + event.getSceneY());
+                }
             }
         }//clicked
 
