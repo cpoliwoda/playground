@@ -27,7 +27,7 @@ import p03raster.util.NodeUtil;
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class FXwindow02cursorJumpOverList extends Application {
+public class FXwindow02cursorJumpOverListUpAndDown extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {

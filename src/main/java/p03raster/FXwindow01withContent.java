@@ -6,11 +6,15 @@
 package p03raster;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import p02twoCircles.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -33,9 +37,6 @@ public class FXwindow01withContent extends Application {
         circle01.centerXProperty().set(100);
         circle01.centerYProperty().set(180);
 
-        //add element to root element of scene
-        root.getChildren().add(circle01);
-
         ArrayList<Shape> circlesInSecColumn = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Circle circle02 = new Circle(30, Color.BLUEVIOLET);
@@ -53,15 +54,14 @@ public class FXwindow01withContent extends Application {
             circle03.centerYProperty().set(50 + 100 * i);
             circlesInSecColumn.add(circle03);
         }
-        
+
         ArrayList<Shape> allCircles = new ArrayList<>();
         allCircles.add(circle01);
         allCircles.addAll(circlesInSecColumn);
         allCircles.addAll(circlesInThirdColumn);
-        
-        
 
-        //add element to root element of scene
+        
+        //add elements to root element of scene
         root.getChildren().addAll(allCircles);
 
         //show window
