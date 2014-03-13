@@ -40,18 +40,20 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         //set position of the shape
         circle01.setLayoutX(100);
         circle01.setLayoutY(180);
+        circle01.setOpacity(0.5);
 
         circle01.setId(Integer.toString(idCounter));
         idCounter++;
 
         Random random = new Random();
-        
+
         ArrayList<Shape> circlesInSecColumn = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Circle circle02 = new Circle(30 + i * 3, Color.BLUEVIOLET);
             //set position of the shape
-            circle02.setLayoutX(random.nextDouble()*sceneWidth);
+            circle02.setLayoutX(random.nextDouble() * sceneWidth);
             circle02.setLayoutY(50 + 100 * i);
+            circle02.setOpacity(0.5);
             circlesInSecColumn.add(circle02);
 
             circle02.setId(Integer.toString(idCounter));
@@ -62,8 +64,9 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         for (int i = 0; i < 3; i++) {
             Circle circle03 = new Circle(20 + i * 2, Color.BLUE);
             //set position of the shape
-            circle03.setLayoutX(random.nextDouble()*sceneWidth);
+            circle03.setLayoutX(random.nextDouble() * sceneWidth);
             circle03.setLayoutY(50 + 100 * i);
+            circle03.setOpacity(0.5);
             circlesInSecColumn.add(circle03);
 
             circle03.setId(Integer.toString(idCounter));
@@ -99,7 +102,7 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
     public KeyMoveOverListEventHandler04(Group root, ArrayList<Shape> allCircles) {
         allShapes.addAll(allCircles);
 //        allShapes.sort(new LayoutXYZcomparator());
-        
+
         Shape firstShape = allShapes.get(0);
         root.getChildren().add(cursor);
 
@@ -114,7 +117,7 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
 //        System.out.println("coordinatesOfFirst = " + coordinatesOfFirst.getX() + " , " + coordinatesOfFirst.getY());
         cursor.setLayoutX(coordinatesOfFirst.getX());
         cursor.setLayoutY(coordinatesOfFirst.getY());
-        
+
 //        sortShapesIntoColumns();
     }
 
@@ -122,13 +125,14 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
         //
         // sort the the shapes into columns
         //
+        //remove all stuff that was added by last call of this methode
+        allColumns.clear();
         //start with new first column and pick the first shape as basis for comparison
         allColumns.add(new ArrayList<>());
         int columnIndex = 0;
         Shape firstShapeInAcolumn = this.allShapes.get(0);
         allColumns.get(0).add(firstShapeInAcolumn);//add the first shape in the first column manually
-        
-        
+
         //check now all other shapes if they are in range 
         //if yes add to latest column
         //if not create next new column and add to it and select new shape for comparison 
@@ -151,15 +155,14 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
 
-         sortShapesIntoColumns();
-         
+        sortShapesIntoColumns();
+
         // if arrow key
         if ((event.getCode().equals(KeyCode.UP))
                 || (event.getCode().equals(KeyCode.DOWN))
                 || (event.getCode().equals(KeyCode.RIGHT))
                 || (event.getCode().equals(KeyCode.LEFT))) {
 
-//            System.out.println(" a arrow key was pressed ");
             Shape shapeMarkedByCursor = null;
 
             //find the shape under the cursor
@@ -175,21 +178,39 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
                 }
             }
 
+            int columnIndexOfCursor = -1;//invalid value as default
+
+            //check in which column the cursor is
+            for (int i = 0; i < allColumns.size(); i++) {
+                boolean columnContainsCursor = allColumns.get(i).contains(shapeMarkedByCursor);
+
+                if (columnContainsCursor) {
+                    columnIndexOfCursor = i;
+                    System.out.println("columnIndexOfCursor = " + columnIndexOfCursor);
+                    break;
+                }
+            }
+
+            //now we check which action we should do
+            //in which direction the cursor should move
             if ((event.getCode().equals(KeyCode.UP))
                     || (event.getCode().equals(KeyCode.DOWN))) {
 
-                int indexOfShape = allShapes.indexOf(shapeMarkedByCursor);
+                ArrayList<Shape> currentColumn = allColumns.get(columnIndexOfCursor);
+
+                int indexOfShapeMarkedByCursor = currentColumn.indexOf(shapeMarkedByCursor);
                 Shape nextShape = null;
 
                 if (event.getCode().equals(KeyCode.UP)) {
                     System.out.println(" UP key was pressed ");
-                    if (indexOfShape > 0) {
-                        nextShape = allShapes.get(indexOfShape - 1);
+                    if (indexOfShapeMarkedByCursor > 0) {
+                        nextShape = currentColumn.get(indexOfShapeMarkedByCursor - 1);
                     }
                 } else {//DOWN
                     System.out.println(" DOWN key was pressed ");
-                    if (indexOfShape < allShapes.size() - 1) {
-                        nextShape = allShapes.get(indexOfShape + 1);
+                    if ( //(indexOfShapeMarkedByCursor > - 1)&& 
+                            (indexOfShapeMarkedByCursor < currentColumn.size() - 1)) {
+                        nextShape = currentColumn.get(indexOfShapeMarkedByCursor + 1);
                     }
                 }
 
@@ -200,27 +221,11 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
 
             } else { // LEFT or RIGHT
 
-//                System.out.println(" LEFT or RIGHT key was pressed ");
-//                System.out.println(" shapeMarkedByCursor = " + shapeMarkedByCursor);
-
-                int columnIndexOfCursor = -1;//invalid value as default
-
-                //check in which column the cursor is
-                for (int i = 0; i < allColumns.size(); i++) {
-                    boolean columnContainsCursor = allColumns.get(i).contains(shapeMarkedByCursor);
-
-                    if (columnContainsCursor) {
-                        columnIndexOfCursor = i;
-                        System.out.println("columnIndexOfCursor = " + columnIndexOfCursor);
-                        break;
-                    }
-                }
-
                 Shape firstShapeInNextColumn = null;
 
                 if (event.getCode().equals(KeyCode.LEFT)) {
                     System.out.println(" LEFT  key was pressed ");
-                    
+
                     if (columnIndexOfCursor > 0) {
                         firstShapeInNextColumn = allColumns.get(columnIndexOfCursor - 1).get(0);
                     }
@@ -230,6 +235,9 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
                     System.out.println(" RIGHT key was pressed ");
                     if ((columnIndexOfCursor > - 1)//we really found a shape
                             && (columnIndexOfCursor < allColumns.size() - 1)) {
+
+                        System.out.println("allColumns.size() = " + allColumns.size());
+                        System.out.println("columnIndexOfCursor + 1 = " + (columnIndexOfCursor + 1));
 
                         firstShapeInNextColumn = allColumns.get(columnIndexOfCursor + 1).get(0);
                     }
