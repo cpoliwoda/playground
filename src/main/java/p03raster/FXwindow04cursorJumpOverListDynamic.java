@@ -152,7 +152,7 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
         }
         System.out.println(" columnIndex = " + columnIndex);
         
-        //sort all columns from top to botton meaning via Y
+        //sort all columns from top to botton meaning via Y is more intuitiv
         LayoutYXcomparator comparator = new LayoutYXcomparator();
         for (ArrayList<Shape> column : allColumns) {
             column.sort(comparator);
