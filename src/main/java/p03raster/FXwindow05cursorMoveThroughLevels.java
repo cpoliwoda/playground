@@ -6,8 +6,11 @@
 package p03raster;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -16,29 +19,40 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import p03raster.util.LayoutXYcomparator;
 import p03raster.util.LayoutYXcomparator;
 
 /**
-  * PROBLEM: there are some constilation where some shape can not be reached.
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class FXwindow04cursorJumpOverListDynamic extends Application {
+public class FXwindow05cursorMoveThroughLevels extends Application {
+
+    HashMap<String, ArrayList<Shape>> levels = new HashMap<>();
+    static String CIRCLES = "CIRCLES";
+    static String RECTANGLES = "RECTANGLES";
+    static String POLYGONS = "POLYGONS";
+    static LayoutXYcomparator xyComparator = new LayoutXYcomparator();
+    static LayoutYXcomparator yxcomparator = new LayoutYXcomparator();
 
     @Override
     public void start(Stage stage) throws Exception {
-        int sceneWidth = 600;
+        int sceneWidth = 800;
         int sceneHeight = 400;
         Group root = new Group();
-        Scene scene = new Scene(root, sceneWidth, sceneHeight, Color.BLACK);
+        Scene scene = new Scene(root, sceneWidth, sceneHeight, Color.GREY);
         stage.setScene(scene);
 
         int idCounter = 1;
 
-        Circle circle01 = new Circle(30, Color.BEIGE);
+        //        
+        //   Circles
+        //
+        Circle circle01 = new Circle(15, Color.BEIGE);
         //set position of the shape
         circle01.setLayoutX(100);
         circle01.setLayoutY(180);
@@ -50,11 +64,12 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         Random random = new Random();
 
         ArrayList<Shape> circlesInSecColumn = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Circle circle02 = new Circle(30 + i * 3, Color.BLUEVIOLET);
+        for (int i = 0; i < 3; i++) {
+            Circle circle02 = new Circle(20 + i * 2, Color.BLUEVIOLET);
             //set position of the shape
-            circle02.setLayoutX(random.nextDouble() * sceneWidth);
-            circle02.setLayoutY(50 + 50 * i);
+//            circle02.setLayoutX(random.nextDouble() * sceneWidth);
+            circle02.setLayoutX(200);
+            circle02.setLayoutY(50 + 100 * i);
             circle02.setOpacity(0.5);
             circlesInSecColumn.add(circle02);
 
@@ -63,11 +78,12 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         }
 
         ArrayList<Shape> circlesInThirdColumn = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Circle circle03 = new Circle(20 + i * 2, Color.BLUE);
+        for (int i = 0; i < 3; i++) {
+            Circle circle03 = new Circle(30 + i * 3, Color.BLUE);
             //set position of the shape
-            circle03.setLayoutX(random.nextDouble() * sceneWidth);
-            circle03.setLayoutY(50 + 50 * i);
+//            circle03.setLayoutX(random.nextDouble() * sceneWidth);
+            circle03.setLayoutX(300);
+            circle03.setLayoutY(50 + 100 * i);
             circle03.setOpacity(0.5);
             circlesInSecColumn.add(circle03);
 
@@ -79,33 +95,135 @@ public class FXwindow04cursorJumpOverListDynamic extends Application {
         allCircles.add(circle01);
         allCircles.addAll(circlesInSecColumn);
         allCircles.addAll(circlesInThirdColumn);
-        //sort the circles 
-        allCircles.sort(new LayoutXYcomparator());
+
+        //
+        //Rectangles
+        //
+        ArrayList<Shape> allRectangles = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Rectangle rect = new Rectangle();
+            //set position of the shape
+//            rect.setLayoutX(random.nextDouble() * sceneWidth);
+            rect.setLayoutX(400);
+            rect.setLayoutY(30 + 100 * i);
+            //set proprties
+            rect.setHeight(20 + 5 * i);
+            rect.setWidth(20);
+            rect.fillProperty().set(Color.ORANGE);
+            rect.setOpacity(0.6);
+
+            rect.setId(Integer.toString(idCounter));
+            idCounter++;
+
+            allRectangles.add(rect);
+        }
+        
+         for (int i = 0; i < 4; i++) {
+            Rectangle rect = new Rectangle();
+            //set position of the shape
+//            rect.setLayoutX(random.nextDouble() * sceneWidth);
+            rect.setLayoutX(470);
+            rect.setLayoutY(30 + 100 * i);
+            //set proprties
+            rect.setHeight(20 + 5 * i);
+            rect.setWidth(20);
+            rect.fillProperty().set(Color.RED);
+            rect.setOpacity(0.6);
+
+            rect.setId(Integer.toString(idCounter));
+            idCounter++;
+
+            allRectangles.add(rect);
+        }
+
+        //
+        //Polygons
+        //
+        ArrayList<Shape> allPolygons = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Polygon polygon = new Polygon(10, 0, 0, 10, 20, 10);//p1(x,y), p2(x,y), p3(x,y)
+
+            //set position of the shape
+//            polygon.setLayoutX(random.nextDouble() * sceneWidth);
+            polygon.setLayoutX(500);
+            polygon.setLayoutY(10 + 100 * i);
+            //set proprties
+
+            polygon.fillProperty().set(Color.GREEN);
+            polygon.setOpacity(0.4);
+
+            polygon.setId(Integer.toString(idCounter));
+            idCounter++;
+
+            allPolygons.add(polygon);
+        }
+        
+        for (int i = 0; i < 4; i++) {
+            Polygon polygon = new Polygon(10, 0, 0, 10, 20, 10);//p1(x,y), p2(x,y), p3(x,y)
+
+            //set position of the shape
+//            polygon.setLayoutX(random.nextDouble() * sceneWidth);
+            polygon.setLayoutX(570);
+            polygon.setLayoutY(10 + 100 * i);
+            //set proprties
+
+            polygon.fillProperty().set(Color.GREENYELLOW);
+            polygon.setOpacity(0.4);
+
+            polygon.setId(Integer.toString(idCounter));
+            idCounter++;
+
+            allPolygons.add(polygon);
+        }
+
+        //sort the circles / rectangles / polygons
+        //if not sorted the virtual rastering algo is not working correct
+        allCircles.sort(xyComparator);
+        allRectangles.sort(xyComparator);
+        allPolygons.sort(xyComparator);
+
+        // ERROR 
+        // still problem with the LAST LEVEL !!! ??? !!!
+        // changing the levels bevviour strang
+//        
+        //add elements to the different levels
+        levels.put(CIRCLES, allCircles);
+        levels.put(RECTANGLES, allRectangles);
+        levels.put(POLYGONS, allPolygons);
 
         //add elements to root element of scene
         root.getChildren().addAll(allCircles);
+        root.getChildren().addAll(allRectangles);
+        root.getChildren().addAll(allPolygons);
 
         //show window
         stage.show();
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, new KeyMoveOverListEventHandler04(root, allCircles));
+//        scene.addEventHandler(KeyEvent.KEY_PRESSED, new KeyMoveOverListEventHandler05(root, allCircles));
+//        scene.addEventHandler(KeyEvent.KEY_PRESSED, new KeyMoveOverListEventHandler05(root, levels, CIRCLES));
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new KeyMoveOverListEventHandler05(root, levels, RECTANGLES));
 
     }
 
 }
 
-class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
+class KeyMoveOverListEventHandler05 implements EventHandler<KeyEvent> {
 
-    ArrayList<Shape> allShapes = new ArrayList<>();
+    public static ObjectProperty<String> activeShapeLevelProperty = new SimpleObjectProperty<String>();
+    public static ObjectProperty<HashMap<String, ArrayList<Shape>>> levelsProperty = new SimpleObjectProperty<>();
+
+//    ArrayList<Shape> allShapes = new ArrayList<>();
     Circle cursor = new Circle(10, Color.BROWN);
     ArrayList<ArrayList<Shape>> allColumns = new ArrayList<>();
     int range = 50;
 
-    public KeyMoveOverListEventHandler04(Group root, ArrayList<Shape> allCircles) {
-        allShapes.addAll(allCircles);
-//        allShapes.sort(new LayoutXYcomparator());
+    public KeyMoveOverListEventHandler05(Group root, HashMap<String, ArrayList<Shape>> levels, String activLevel) {
+        levelsProperty.set(levels);
+        activeShapeLevelProperty.set(activLevel);
+//        allShapes.addAll(shapes);
 
-        Shape firstShape = allShapes.get(0);
+//        Shape firstShape = allShapes.get(0);
+        Shape firstShape = levelsProperty.get().get(activeShapeLevelProperty.get()).get(0);
         root.getChildren().add(cursor);
 
         /* Attention:
@@ -119,8 +237,6 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
 //        System.out.println("coordinatesOfFirst = " + coordinatesOfFirst.getX() + " , " + coordinatesOfFirst.getY());
         cursor.setLayoutX(coordinatesOfFirst.getX());
         cursor.setLayoutY(coordinatesOfFirst.getY());
-
-//        sortShapesIntoColumns();
     }
 
     public void sortShapesIntoColumns() {
@@ -132,14 +248,17 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
         //start with new first column and pick the first shape as basis for comparison
         allColumns.add(new ArrayList<>());
         int columnIndex = 0;
-        Shape firstShapeInAcolumn = this.allShapes.get(0);
+//        Shape firstShapeInAcolumn = this.allShapes.get(0);
+        Shape firstShapeInAcolumn = levelsProperty.get().get(activeShapeLevelProperty.get()).get(0);
         allColumns.get(0).add(firstShapeInAcolumn);//add the first shape in the first column manually
 
         //check now all other shapes if they are in range 
         //if yes add to latest column
         //if not create next new column and add to it and select new shape for comparison 
-        for (int i = 1; i < this.allShapes.size(); i++) {
-            Shape nextShape = this.allShapes.get(i);
+//        for (int i = 1; i < this.allShapes.size(); i++) {
+//            Shape nextShape = this.allShapes.get(i);
+        for (int i = 1; i < levelsProperty.get().get(activeShapeLevelProperty.get()).size(); i++) {
+            Shape nextShape = levelsProperty.get().get(activeShapeLevelProperty.get()).get(i);
 
             //check if next shape is in x direction near enough
             if (nextShape.getLayoutX() - range <= firstShapeInAcolumn.getLayoutX()) {
@@ -152,11 +271,10 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
             }
         }
         System.out.println(" columnIndex = " + columnIndex);
-        
-        //sort all columns from top to botton meaning via Y is more intuitiv
-        LayoutYXcomparator comparator = new LayoutYXcomparator();
+
+        //sort all columns from top to botton meaning via Y is more intutiv
         for (ArrayList<Shape> column : allColumns) {
-            column.sort(comparator);
+            column.sort(FXwindow05cursorMoveThroughLevels.yxcomparator);
         }
     }
 
@@ -168,7 +286,23 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
         if(eventKeyCode.equals(KeyCode.ESCAPE)){
             System.exit(0);
         }
-        
+
+        // if a or s or d, switching between the levels
+        if ((eventKeyCode.equals(KeyCode.A)) || (eventKeyCode.equals(KeyCode.S)) || (eventKeyCode.equals(KeyCode.D))) {
+
+            if ((eventKeyCode.equals(KeyCode.A))) {
+                activeShapeLevelProperty.set(FXwindow05cursorMoveThroughLevels.CIRCLES);
+            } else if (eventKeyCode.equals(KeyCode.S))// s
+            {
+                activeShapeLevelProperty.set(FXwindow05cursorMoveThroughLevels.RECTANGLES);
+            } else if (eventKeyCode.equals(KeyCode.D))//d
+            {
+                activeShapeLevelProperty.set(FXwindow05cursorMoveThroughLevels.POLYGONS);
+            }
+
+            sortShapesIntoColumns();
+        }
+
         sortShapesIntoColumns();
 
         // if arrow key
@@ -179,9 +313,11 @@ class KeyMoveOverListEventHandler04 implements EventHandler<KeyEvent> {
 
             Shape shapeMarkedByCursor = null;
 
-            //find the shape under the cursor
-            for (int i = 0; i < allShapes.size(); i++) {
-                shapeMarkedByCursor = allShapes.get(i);
+//            //find the shape under the cursor
+//            for (int i = 0; i < allShapes.size(); i++) {
+//                shapeMarkedByCursor = allShapes.get(i);            
+            for (int i = 0; i < levelsProperty.get().get(activeShapeLevelProperty.get()).size(); i++) {
+                shapeMarkedByCursor = levelsProperty.get().get(activeShapeLevelProperty.get()).get(i);
 
                 boolean containsCursorCenter = shapeMarkedByCursor.contains(
                         shapeMarkedByCursor.sceneToLocal(cursor.getLayoutX(), cursor.getLayoutY()));
