@@ -206,6 +206,25 @@ public class FXw02withLevels extends Application {
         
         virtualRaster.setActiveNodeLevel(CIRCLES);
         virtualRaster.initCursor();
+        
+//        // TEST adding a node to a level
+//        Polygon polygon = new Polygon(10, 0, 0, 10, 20, 10);//p1(x,y), p2(x,y), p3(x,y)
+//
+//            //set position of the shape
+////            polygon.setLayoutX(random.nextDouble() * sceneWidth);
+//            polygon.setLayoutX(570);
+//            polygon.setLayoutY(10 + 180);
+//            //set proprties
+//
+//            polygon.fillProperty().set(Color.BLACK);
+//            polygon.setOpacity(0.4);
+//
+//            polygon.setId(Integer.toString(idCounter));
+//            idCounter++;
+//       
+//            root.getChildren().add(polygon);
+//            
+//            virtualRaster.addNodeToLevel(POLYGONS, polygon);
     }
 
 }
