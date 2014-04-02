@@ -23,13 +23,15 @@ public class LayoutYXcomparator implements Comparator<Node> {
          */
         if (o1 == null || o2 == null) {
 
-            if (o1 == null) {
-                return -1;
-            } else if (o2 == null) {
-                return 1;
+            if (o1 == null && o2 == null) {
+                return 0;
+            } else {
+                if (o1 == null) {
+                    return -1;
+                } else if (o2 == null) {
+                    return 1;
+                }
             }
-            return 0;
-
         } else {
 
             // check first Y than X
